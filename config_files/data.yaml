@@ -1,0 +1,5 @@
+names:
+- Image-annotation
+nc: 1
+train: /content/datasets/Picture-Annotation2-1/train/images
+val: /content/datasets/Picture-Annotation2-1/valid/images
