@@ -4,7 +4,12 @@ import sys
 import numpy as np
 import yaml
 import pyscreenshot as ImageGrab
+import mouse
+from manga_ocr import MangaOcr
+import PIL.Image
+from PIL import Image
 
+mocr = MangaOcr()
 
 def build_model(is_cuda):
     net = cv2.dnn.readNet("config_files/best.onnx")
@@ -136,6 +141,17 @@ while True:
     
     if len(boxes) > 0:
         print("detected position", boxes)
+        # to do close the picture
+        # mouse.move(boxes[0][0], boxes[0][1], absolute=True)
+        # mouse.click('left')
+        x_min = boxes[0][0]
+        x_max = boxes[0][0] + boxes[0][2]
+        y_min = boxes[0][1]
+        y_max = boxes[0][1] + boxes[0][3]
+        crop_image = inputImage[y_min:y_max, x_min:x_max]
+        im = Image.fromarray(crop_image)
+        text_Manga_ocr = mocr(im)
+        print(text_Manga_ocr)
 
     frame_count += 1
     total_frames += 1
