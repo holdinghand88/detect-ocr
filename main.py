@@ -162,6 +162,7 @@ while True:
         mouse.move(x_min, y_max)
         mouse.click('left')
         keyboard.write(text_easyocr)
+        keyboard.press_and_release('enter')
         print(text_easyocr)
 
     frame_count += 1
