@@ -154,7 +154,7 @@ while True:
         crop_image = inputImage[y_min:y_max, x_min:x_max]
        # im = Image.fromarray(crop_image) # manga-ocr image input requirements...
         img2RGB_wbg = img2RGB.fix_lie_image(crop_image)  # image converted white background...
-        text_easyocr = reader.readtext(crop_image, detail = 0, paragraph = "True")
+        text_easyocr = reader.readtext(img2RGB_wbg, detail = 0, paragraph = "True")
         # text_Manga_ocr = mocr(im)
         print(text_easyocr)
 
