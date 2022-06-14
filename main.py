@@ -10,6 +10,7 @@ import PIL.Image
 from PIL import Image
 import easyocr
 import img2RGB
+import keyboard
 
 # mocr = MangaOcr()
 reader = easyocr.Reader(['ja'], recog_network='custom_model')
@@ -156,6 +157,11 @@ while True:
         img2RGB_wbg = img2RGB.fix_lie_image(crop_image)  # image converted white background...
         text_easyocr = reader.readtext(img2RGB_wbg, detail = 0, paragraph = "True")
         # text_Manga_ocr = mocr(im)
+        x_min = x_min + 5   # change the position a bit for the textbox
+        y_max = y_max + 3   # change the position a bit for the textbox
+        mouse.move(x_min, y_max)
+        mouse.click('left')
+        keyboard.write(text_easyocr)
         print(text_easyocr)
 
     frame_count += 1
