@@ -12,7 +12,7 @@ import easyocr
 import img2RGB
 
 # mocr = MangaOcr()
-reader = easyocr.Reader(['ja'])
+reader = easyocr.Reader(['ja'], recog_network='custom_model')
 
 def build_model(is_cuda):
     net = cv2.dnn.readNet("config_files/best.onnx")
