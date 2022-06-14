@@ -8,8 +8,11 @@ import mouse
 from manga_ocr import MangaOcr
 import PIL.Image
 from PIL import Image
+import easyocr
+import img2RGB
 
-mocr = MangaOcr()
+# mocr = MangaOcr()
+reader = easyocr.Reader(['ja'])
 
 def build_model(is_cuda):
     net = cv2.dnn.readNet("config_files/best.onnx")
@@ -149,9 +152,11 @@ while True:
         y_min = boxes[0][1]
         y_max = boxes[0][1] + boxes[0][3]
         crop_image = inputImage[y_min:y_max, x_min:x_max]
-        im = Image.fromarray(crop_image)
-        text_Manga_ocr = mocr(im)
-        print(text_Manga_ocr)
+       # im = Image.fromarray(crop_image) # manga-ocr image input requirements...
+        img2RGB_wbg = img2RGB.fix_lie_image(crop_image)  # image converted white background...
+        text_easyocr = reader.readtext(crop_image, detail = 0, paragraph = "True")
+        # text_Manga_ocr = mocr(im)
+        print(text_easyocr)
 
     frame_count += 1
     total_frames += 1
@@ -175,8 +180,5 @@ while True:
     imS = cv2.resize(frame, (960, 540))  
     #cv2.imshow("output", imS)
 
-    if cv2.waitKey(1) > -1:
-        print("finished by user")
-        break
-
+  
 print("Total frames: " + str(total_frames))
